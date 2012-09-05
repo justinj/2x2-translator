@@ -1,20 +1,19 @@
 <!doctype html>
 <html>
 <head>
-  <script src="translator.js"></script>
+  <script src="jquery.js"></script>
+  <script src="Algorithm.js"></script>
+  <script src="Translator.js"></script>
   <script>
     function run() 
     {
-      box = document.getElementById("alg_box")
-      results = document.getElementById("results");
-      var inputs = [];
-      inputs = box.value.split("\n")
-      results.innerHTML = ""
-      for (var i = 0; i < inputs.length; i++)
-      {
-        var input = inputs[i]
-        results.innerHTML += findAllWays(input).join("<BR>") + "<BR>"
-      }
+      box = $("#alg_box")
+      results = $("#results");
+      var inputs = box.val().split("\n")
+      results.html("");
+      $.each(inputs, function(index, input) {
+        results.append(Translator.findAllWays(input).join("<BR>") + "<BR>")
+      });
     }
   </script>
 </head>
