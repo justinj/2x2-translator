@@ -58,7 +58,7 @@ var translations = {
   }
 }
 
-function split_alg(alg)
+function splitAlg(alg)
 {
   var nospaces = alg.split(" ").join("")
   var moves = [];
@@ -76,19 +76,22 @@ function split_alg(alg)
   return moves;
 }
 
-function first_move(alg)
+function firstMove(alg)
 {
-  return split_alg(alg)[0]
+  return splitAlg
+(alg)[0]
 }
 
-function rest_of_moves(alg)
+function restOfMoves(alg)
 {
-  return split_alg(alg).slice(1).join(" ");
+  return splitAlg
+(alg).slice(1).join(" ");
 }
 
-function number_of_face_turn(alg, face)
+function numberOfFaceTurns(alg, face)
 {
-  var moves = split_alg(alg);
+  var moves = splitAlg
+(alg);
   var count = 0;
   for (var i = 0; i < moves.length; i++)
   {
@@ -98,47 +101,48 @@ function number_of_face_turn(alg, face)
   return count;
 }
 
-function convert_move(move)
+function convertMove(move)
 {
   var face = move[0];
   var suffix = move.substring(1);  
   return conversions[face] + suffix;
 }
 
-function translate_move(converted, move)
+function translateMove(converted, move)
 {
   var face = move[0];
   var suffix = move.substring(1)
-  var converted_face = converted[0];
-  var converted_suffix = converted.substring(1);
-  if (converted_suffix == "'")
-    return translate_move(converted[0] + "2", translate_move(converted_face, move))
-  if (converted_suffix == "2")
-    return translate_move(converted[0], translate_move(converted_face, move));
+  var convertedFace = converted[0];
+  var convertedSuffix = converted.substring(1);
+  if (convertedSuffix == "'")
+    return translateMove(converted[0] + "2", translateMove(convertedFace, move))
+  if (convertedSuffix == "2")
+    return translateMove(converted[0], translateMove(convertedFace, move));
   return translations[converted[0]][face] + suffix;
 }
 
-function convert_first_move(alg)
+function convertFirstMove(alg)
 {
-  var moves = split_alg(alg);
-  moves[0] = convert_move(moves[0]);
+  var moves = splitAlg
+(alg);
+  moves[0] = convertMove(moves[0]);
   var i;
   for (i = 1; i < moves.length; i++)
   {
-    moves[i] = translate_move(moves[0], moves[i]); 
+    moves[i] = translateMove(moves[0], moves[i]); 
   }
   return moves.join(" ");
 }
 
-function meets_robert_yaus_criteria(alg)
+function meetsRobertYausCriteria(alg)
 {
-  if (number_of_face_turn(alg, "D") > 1)
+  if (numberOfFaceTurns(alg, "D") > 1)
     return false;
 
   return true;
 }
 
-function find_all_ways(alg) 
+function findAllWays(alg) 
 {
   if (alg == "")
   {
@@ -146,17 +150,17 @@ function find_all_ways(alg)
   }  
   var bases = [];
   bases.push(alg);
-  bases.push(convert_first_move(alg))
+  bases.push(convertFirstMove(alg))
   var result = [];
   var j;
   for (j = 0; j < bases.length; j++)
   {
-    var tails = find_all_ways(rest_of_moves(bases[j]))
+    var tails = findAllWays(restOfMoves(bases[j]))
     var i;
     for (i = 0; i < tails.length; i++)
     {
-      var newalg = first_move(bases[j]) + " " + tails[i];
-      if (meets_robert_yaus_criteria(newalg))
+      var newalg = firstMove(bases[j]) + " " + tails[i];
+      if (meetsRobertYausCriteria(newalg))
         result.push(newalg)
     }
   }
