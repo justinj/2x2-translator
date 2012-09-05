@@ -82,6 +82,14 @@ Translator = {
     }
     return moves.join(" ");
   },
+  formatInput: function(alg)
+  {
+    moves = Algorithm.splitAlg(alg);
+    if (moves[moves.length-1][0] == "U") {
+      moves.pop();
+    }
+    return moves.join(" ");
+  },
   meetsRobertYausCriteria: function(alg)
   {
     if (Algorithm.numberOfFaceTurns(alg, "D") > 1)

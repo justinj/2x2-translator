@@ -35,4 +35,11 @@ describe("Translator", function() {
       expect(Translator.findAllWays("R U R'")).toEqual(["R U R'", "R U L'", "R D B'", "R D F'", "L F R'", "L F L'", "L B U'", "L B D'"]);
     });
   });
+
+  describe("formatInput", function() {
+    it("removes any U moves from the beginning of the input", function() {
+      expect(Translator.formatInput("R U R' U'")).toEqual("R U R'");
+      expect(Translator.formatInput("R U R'")).toEqual("R U R'");
+    });
+  });
 });

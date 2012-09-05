@@ -12,7 +12,7 @@
       var inputs = box.val().split("\n")
       results.html("");
       $.each(inputs, function(index, input) {
-        results.append(Translator.findAllWays(input).join("<BR>") + "<BR>")
+        results.append(Translator.findAllWays(Translator.formatInput(input)).join("<BR>") + "<BR>")
       });
     }
   </script>
