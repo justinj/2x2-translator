@@ -60,7 +60,20 @@ var translations = {
 
 function split_alg(alg)
 {
-  return alg.split(" ");
+  var nospaces = alg.split(" ").join("")
+  var moves = [];
+  while (nospaces != "")
+  {
+    var move = nospaces[0];
+    nospaces = nospaces.substring(1);
+    if (conversions[nospaces[0]] == undefined)
+    {
+      move += nospaces[0];
+      nospaces = nospaces.substring(1);
+    }
+    moves.push(move);
+  }
+  return moves;
 }
 
 function first_move(alg)
