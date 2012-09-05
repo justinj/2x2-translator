@@ -62,11 +62,11 @@ function split_alg(alg)
 {
   var nospaces = alg.split(" ").join("")
   var moves = [];
-  while (nospaces != "")
+  while (nospaces != "" && nospaces[0] != "(")
   {
     var move = nospaces[0];
     nospaces = nospaces.substring(1);
-    if (conversions[nospaces[0]] == undefined)
+    if (nospaces.length != "" && conversions[nospaces[0]] == undefined)
     {
       move += nospaces[0];
       nospaces = nospaces.substring(1);
@@ -84,6 +84,18 @@ function first_move(alg)
 function rest_of_moves(alg)
 {
   return split_alg(alg).slice(1).join(" ");
+}
+
+function number_of_face_turn(alg, face)
+{
+  var moves = split_alg(alg);
+  var count = 0;
+  for (var i = 0; i < moves.length; i++)
+  {
+    if (moves[i][0] == face)
+      count++;
+  }
+  return count;
 }
 
 function convert_move(move)
@@ -118,6 +130,14 @@ function convert_first_move(alg)
   return moves.join(" ");
 }
 
+function meets_robert_yaus_criteria(alg)
+{
+  if (number_of_face_turn(alg, "D") > 1)
+    return false;
+
+  return true;
+}
+
 function find_all_ways(alg) 
 {
   if (alg == "")
@@ -135,7 +155,9 @@ function find_all_ways(alg)
     var i;
     for (i = 0; i < tails.length; i++)
     {
-      result.push(first_move(bases[j])+ " " +tails[i])
+      var newalg = first_move(bases[j]) + " " + tails[i];
+      if (meets_robert_yaus_criteria(newalg))
+        result.push(newalg)
     }
   }
   return result.slice(0);
