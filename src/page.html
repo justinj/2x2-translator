@@ -1,31 +1,51 @@
 <!doctype html>
 <html>
-<head>
-  <link rel="stylesheet" type="text/css" href="style.css" />
-  <script src="../lib/jquery.js"></script>
-  <script src="Algorithm.js"></script>
-  <script src="Translator.js"></script>
-  <script>
-    function run() 
-    {
-      box = $("#alg_box")
-      results = $("#results");
-      var inputs = box.val().split("\n")
-      results.html("");
-      $.each(inputs, function(index, input) {
-        results.append(Translator.findAllWays(Translator.formatInput(input)).join("<BR>") + "<BR>")
+  <head>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <script src="../lib/jquery.js"></script>
+    <script src="Algorithm.js"></script>
+    <script src="Translator.js"></script>
+    <script>
+      $(function(){
+        $("#go").click(run);
       });
-    }
-  </script>
-</head>
-<body>
-  <textarea
-    cols="5"
-    type="text" 
-    id="alg_box"
-    ></textarea><br>
-  <input type="button" onclick="run()" value="Go" />
-  <div id="results"></div>
-  <div id="options"></div>
-</body>
+      function run() 
+      {
+        box = $("#alg_box")
+        results = $("#results");
+        var inputs = box.val().split("\n")
+        results.html("");
+        $.each(inputs, function(index, input) {
+          results.append(Translator.findAllWays(Translator.formatInput(input, getOptions()), getOptions()).join("<BR>") + "<BR>")
+        });
+      }
+
+      function getOptions()
+      {
+        options = {}
+        options["remove_trailing_u"] = $("#remove_trailing_u")[0].checked
+        options["one_d"] = $("#one_d")[0].checked
+        return options;
+      }
+    </script>
+  </head>
+  <body>
+    <div id="sidebar">
+      <div id="input" >
+        <textarea
+          cols="5"
+          type="text" 
+          id="alg_box"
+          ></textarea>
+      </div>
+      <div id="go">
+        <input type="button" value="Go" id="go"/>
+      </div>
+      <div id="options">
+        <input checked="true" type="checkbox" id="remove_trailing_u" />Remove trailing U moves<br />
+        <input checked="true" type="checkbox" id="one_d" />Limit to one D move<br />
+      </div>
+    </div>
+    <div id="results">results</div>
+  </body>
 </html>
