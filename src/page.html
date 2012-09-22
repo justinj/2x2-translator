@@ -16,7 +16,14 @@
         var inputs = box.val().split("\n")
         results.html("");
         $.each(inputs, function(index, input) {
-          results.append(Translator.translate(Translator.formatInput(input, getOptions()), getOptions()).join("<BR>") + "<BR><BR>")
+          var algs = Translator.translate(Translator.formatInput(input, getOptions()), getOptions());
+          algs = algs.map(function(input) {
+            return "<a class=\"alglink\">"+input+"</a>";
+          });
+          results.append(algs.join("<BR>") + "<BR><BR>")
+        });
+        $(".alglink").click(function(event) {
+          $("#notes").val($("#notes").val()+event.target.innerHTML+"\n");
         });
       }
 
@@ -47,10 +54,10 @@
         <input checked="true" type="checkbox" id="one_d" />Limit to one D move<br />
         <input checked="true" type="checkbox" id="show_y_rotations" />Show y rotations first<br />
       </div>
-      <div id="note_box">
-        <p>Notes</p>
-        <textarea id="notes" cols="5" type="text"></textarea>
-      </div>
+    </div>
+    <div id="note_box">
+      <p>Notes</p>
+      <textarea id="notes" cols="5" type="text"></textarea>
     </div>
     <div id="results"></div>
   </body>
