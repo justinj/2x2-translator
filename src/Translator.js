@@ -121,6 +121,10 @@ Translator = {
     {
       return [""]
     }  
+    if (alg[0] == "y") 
+    {
+      return Translator.findAllWays(Algorithm.restOfMoves(alg)).map(function(input){return Algorithm.firstMove(alg) + " " + input});
+    }
     var bases = [];
     bases.push(alg);
     bases.push(Translator.convertFirstMove(alg))
@@ -155,10 +159,13 @@ Translator = {
   {
     var translations = [];
     if (options["show_y_rotations"]) {
-      translations = translations.concat(Translator.yRotations(alg));
-      translations.push("");
+      var algs = Translator.yRotations(alg);
+      for (var i = 0; i < algs.length; i++)
+         translations = translations.concat(Translator.findAllWays(algs[i],options));
+
+    } else {
+         translations = Translator.findAllWays(alg,options);
     }
-    translations = translations.concat(Translator.findAllWays(alg, options));
     return translations
   }
 }
