@@ -23,6 +23,12 @@ describe("Translator", function() {
     });
   });
 
+  describe("yRotations", function() {
+    it("shows all y rotations of an alg",function() {
+      expect(Translator.yRotations("R")).toEqual(["R","y F","y2 L","y' B"]);
+      });
+  });
+
   describe("findAllWays", function() {
     it("finds all ways of executing an alg",function() {
       expect(Translator.findAllWays("R U R'")).toEqual(["R U R'", "R U L'", "R D B'", "R D F'", "L F R'", "L F L'", "L B U'", "L B D'"]);

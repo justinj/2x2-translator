@@ -63,24 +63,29 @@ Translator = {
     var causingMoveSuffix = causingMove.substring(1);
 
     if (causingMoveSuffix == "'")
-      return Translator.fixMove(causingMove[0] + "2", Translator.fixMove(causingMoveFace, move))
+      return Translator.fixMove(causingMove[0] + "2", Translator.fixMove(causingMoveFace, move));
 
-        if (causingMoveSuffix == "2")
-          return Translator.fixMove(causingMove[0], Translator.fixMove(causingMoveFace, move));
+    if (causingMoveSuffix == "2")
+      return Translator.fixMove(causingMove[0], Translator.fixMove(causingMoveFace, move));
 
     return Translator.translations[causingMove[0]][face] + suffix;
   },
-  convertFirstMove: function(alg)
+  adjustAlg: function(causingMove, alg)
   {
-    var moves = Algorithm.splitAlg
-      (alg);
-    moves[0] = Translator.convertMove(moves[0]);
+    var moves = Algorithm.splitAlg(alg);
     var i;
-    for (i = 1; i < moves.length; i++)
+    for (i = 0; i < moves.length; i++)
     {
-      moves[i] = Translator.fixMove(moves[0], moves[i]); 
+      moves[i] = Translator.fixMove(causingMove, moves[i]); 
     }
     return moves.join(" ");
+  },
+  convertFirstMove: function(alg)
+  {
+    var moves = Algorithm.splitAlg(alg);
+    moves[0] = Translator.convertMove(moves[0]);
+
+    return moves[0] + " " + Translator.adjustAlg(moves[0], Algorithm.restOfMoves(alg));
   },
   formatInput: function(alg, options)
   {
@@ -135,5 +140,25 @@ Translator = {
       }
     }
     return result.slice(0);
+  },
+  yRotations: function(alg) 
+  {
+    var result = [alg];
+    var moves = ["U", "U2", "U'"];
+    var rotations = ["y", "y2", "y'"]
+    for (var i = 0; i < moves.length; i++) {
+      result.push(rotations[i]+ " " + Translator.adjustAlg(moves[i],alg));
+    }
+    return result;
+  },
+  translate: function(alg, options)
+  {
+    var translations = [];
+    if (options["show_y_rotations"]) {
+      translations = translations.concat(Translator.yRotations(alg));
+      translations.push("");
+    }
+    translations = translations.concat(Translator.findAllWays(alg, options));
+    return translations
   }
 }

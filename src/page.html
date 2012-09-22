@@ -16,7 +16,7 @@
         var inputs = box.val().split("\n")
         results.html("");
         $.each(inputs, function(index, input) {
-          results.append(Translator.findAllWays(Translator.formatInput(input, getOptions()), getOptions()).join("<BR>") + "<BR><BR>")
+          results.append(Translator.translate(Translator.formatInput(input, getOptions()), getOptions()).join("<BR>") + "<BR><BR>")
         });
       }
 
@@ -25,6 +25,7 @@
         options = {}
         options["remove_trailing_u"] = $("#remove_trailing_u")[0].checked
         options["one_d"] = $("#one_d")[0].checked
+        options["show_y_rotations"] = $("#show_y_rotations")[0].checked
         return options;
       }
     </script>
@@ -44,6 +45,7 @@
       <div id="options">
         <input checked="true" type="checkbox" id="remove_trailing_u" />Remove trailing U moves<br />
         <input checked="true" type="checkbox" id="one_d" />Limit to one D move<br />
+        <input checked="true" type="checkbox" id="show_y_rotations" />Show y rotations first<br />
       </div>
     </div>
     <div id="results"></div>
