@@ -12,13 +12,13 @@ html, body
   height:100%;
 }
 
-#input
+#input, #note_box
 {
   margin:10px;
   height: 100px;
 }
 
-#alg_box
+#alg_box, #notes
 {
   width:98%;
   max-width:98%;
