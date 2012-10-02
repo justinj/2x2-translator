@@ -1,0 +1,19 @@
+body {
+  padding-top:30px;
+}
+
+.panel {
+  background-color: #DDDDDD;
+  border-radius:5px;
+  padding:10px;
+  height:100%;
+}
+
+#alg_box, #notes {
+  resize:vertical;
+  width:95%;
+}
+
+a {
+  cursor:pointer;
+}
