@@ -12,11 +12,19 @@ function run()
     algs = algs.map(function(input) {
       return "<a class=\"alglink\">"+input+"</a>";
     });
-    results.append(algs.join("<BR>") + "<BR><BR>")
+    $.each(algs, function(index,alg){
+      addAlgToResults(alg);
+    });
   });
+
+
   $(".alglink").click(function(event) {
     $("#notes").val($("#notes").val()+event.target.innerHTML+"\n");
   });
+}
+
+function addAlgToResults(alg) {
+  results.append(alg + "<BR>")
 }
 
 function getOptions()
